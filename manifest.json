@@ -13,8 +13,8 @@
         "autoHide": false,
         "url": "assets/iframe.html",
         "size": {
-          "width": "450px",
-          "height": "500px"
+          "width": "350px",
+          "height": "400px"
         }
       }
     }

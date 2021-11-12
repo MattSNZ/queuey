@@ -1,1 +1,20 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css";
+
+.count-div {
+  box-sizing: border-box;
+  width: 80px;
+}
+
+.button-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+#content img {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  margin: 0 auto;
+}
