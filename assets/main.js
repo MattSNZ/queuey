@@ -1,16 +1,18 @@
 let client
 let subdomain
+let views
 
 $(function () {
   client = ZAFClient.init()
-  // client.invoke('resize', { width: '400px', height: '500px' })
-  // bindEventListener()
   client.context()  
     .then(res => {
       return subdomain = res.account.subdomain
     })
     .then(subdomain => requestViews(client, subdomain))
-    .then(() => bindEventListener())
+    .then(() => {
+      bindEventListeners()
+      client.invoke('popover', 'show')
+    })
 })
 
 function showInfo (data) {
@@ -42,14 +44,17 @@ function requestViews(client, subdomain) {
     .then(response => {
       return Promise.all(response.views.map(each => getViewCount(client, each, subdomain)))
     })
-    .then(res => showInfo({ views: [...res] }))
+    .then(res => {
+      views = { views: [...res] }
+      showInfo(views)
+    })
     .catch(error => {
       console.error(error)
       showError(error)
     })
 }
 
-function getViewCount(client, viewObj, subdomain) {
+function getViewCount(client, viewObj) {
   const settings = {
     url: '/api/v2/views/' + viewObj.id + '/count.json',
     type:'GET',
@@ -60,7 +65,6 @@ function getViewCount(client, viewObj, subdomain) {
     .then(res => {
       viewObj.ticketCount = res.view_count.pretty
       viewObj.link = 'https://'+ subdomain + '.zendesk.com/agent/filters/' + viewObj.id
-      // console.log(viewObj)
       return viewObj
     })
     .catch(error => {
@@ -70,12 +74,16 @@ function getViewCount(client, viewObj, subdomain) {
 }
 
 function buttonRefresh() {
-  $('#content').html('<img src="./loading-buffering.gif" heighy/>')
-  console.log('click!')
+  $('#content').html('<img src="./loading-buffering.gif" class="image is-96x96 mx-auto" />')
   return requestViews(client, subdomain)
+    .then(() => bindEventListeners())
 }
 
-function bindEventListener() {
+function viewURL() {
+  client.invoke('routeTo', 'views', this.id)
+}
+
+function bindEventListeners() {
   document.getElementById('refresh-button').addEventListener('click', buttonRefresh)
-  console.log('listener bound!')
+  views.views.map(each => document.getElementById(each.id).addEventListener('click', viewURL))
 }

@@ -2,60 +2,36 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <script src="https://kit.fontawesome.com/12da18ac43.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./nomalize.css">
   <link rel="stylesheet" href="./main.css">
 </head>
 <body>
   <body>
     <div id="content">
-      <img src="./loading-buffering.gif" height="25px" />
+      <img src="./loading-buffering.gif" class="image mx-auto" />
     </div>
-    <footer class="content">
-      <div class="content has-text-centered">
-        <a href="https://mattsnz.github.io" target="_blank">Report bugs</a>
-      </div>
-    </footer>  
     <script id="view-template" type="text/x-handlebars-template">
-      <div class="block button-div">
+      <div class="button-div">
         <button class="button is-success is-light" id="refresh-button">REFRESH</button>
       </div>
-      <div class="columns is-multiline">
-        {{#each views}}
-          {{#if this.restriction}}
-            <div class="column is-full">
-              <a href={{this.link}} target="_parent">
-                <div class="level is-mobile">
-                  <div class="level-left count-div">
-                    <div class="level-item">
-                      <div class="content">{{this.ticketCount}}</div>
-                    </div>
-                  </div>
-                  <div class="level-item is-flex is-justify-content-flex-start">
-                    <div class="content">{{this.title}}</div>
-                  </div>
+      <div class="columns is-flex is-flex-direction-column is-multiline views-container">
+          {{#each views}}
+          <div class="column is-full">
+            <a href="#" id="{{this.id}}">
+            <div class="level is-mobile">
+              <div class="level-left count-div">
+                <div class="level-item">
+                  <div class="content">{{this.ticketCount}}</div>
                 </div>
-              </a>
+              </div>
+              <div class="level-item is-flex is-justify-content-flex-start">
+                <div class="content">{{this.title}}</div>
+              </div>
             </div>
-          {{/if}}
-        {{/each}}
-        {{#each views}}
-          {{#unless this.restriction}}
-            <div class="column is-full">
-              <a href={{this.link}} target="_parent">
-                <div class="level is-mobile">
-                  <div class="level-left count-div">
-                    <div class="level-item">
-                      <div class="content">{{this.ticketCount}}</div>
-                    </div>
-                  </div>
-                  <div class="level-item is-flex is-justify-content-flex-start">
-                    <div class="content">{{this.title}}</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          {{/unless}}
-        {{/each}}
+          </a>
+          </div>
+          {{/each}}
       </div>
       <div class="block"></div>
     </script>
