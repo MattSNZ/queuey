@@ -1,18 +1,10 @@
 let client
-let subdomain
 let views
 
 $(function () {
   client = ZAFClient.init()
-  client.context()  
-    .then(res => {
-      return subdomain = res.account.subdomain
-    })
-    .then(subdomain => requestViews(client, subdomain))
-    .then(() => {
-      bindEventListeners()
-      client.invoke('popover', 'show')
-    })
+  requestViews(client)
+    .then(() => bindEventListeners())
 })
 
 function showInfo (data) {
@@ -33,7 +25,7 @@ function showError(response) {
   $("#content").html(html)
 }
 
-function requestViews(client, subdomain) {
+function requestViews(client) {
   var settings = {
     url: '/api/v2/views/active.json',
     type:'GET',
@@ -42,7 +34,7 @@ function requestViews(client, subdomain) {
 
   return client.request(settings)
     .then(response => {
-      return Promise.all(response.views.map(each => getViewCount(client, each, subdomain)))
+      return Promise.all(response.views.map(each => getViewCount(client, each)))
     })
     .then(res => {
       views = { views: [...res] }
@@ -64,7 +56,6 @@ function getViewCount(client, viewObj) {
   return client.request(settings)
     .then(res => {
       viewObj.ticketCount = res.view_count.pretty
-      viewObj.link = 'https://'+ subdomain + '.zendesk.com/agent/filters/' + viewObj.id
       return viewObj
     })
     .catch(error => {
@@ -75,7 +66,7 @@ function getViewCount(client, viewObj) {
 
 function buttonRefresh() {
   $('#content').html('<img src="./loading-buffering.gif" class="image is-96x96 mx-auto" />')
-  return requestViews(client, subdomain)
+  return requestViews(client)
     .then(() => bindEventListeners())
 }
 
