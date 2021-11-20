@@ -1,8 +1,8 @@
 {
   "app": {
-    "name": "Zen Tunes",
-    "short_description": "Play the famous zen tunes in your help desk.",
-    "long_description": "Play the famous zen tunes in your help desk and \n listen to the beats it has to offer.",
-    "installation_instructions": "Simply click install."
+    "name": "Queuey",
+    "short_description": "An easy-to-access list of all your views.",
+    "long_description": "An easy-to-access list of all your views.",
+    "installation_instructions": "Follow the instructions for installing private apps."
   }
 }
